@@ -1,0 +1,34 @@
+* A minimal working example of an LLVM pass, built a la out-of-source, without CMake
+
+This repo attempts to provide a starting point for writing an
+LLVM pass. To make things as simple as possible, the code is to be
+built with several command lines, out of the LLVM source tree.
+
+Related:
+- 
+An helloworld LLVM pass is provided here: 
+http://llvm.org/docs/WritingAnLLVMPass.html#quick-start-writing-hello-world
+
+- 
+An helloworld LLVM pass built with CMake is provided here:
+https://github.com/hperl/llvm-transformation-pass
+
+
+
+** How to build the pass
+
+1. Comple the target into LLVM bitcode; Clang is needed in this step
+
+clang++ -emit-llvm main_tested.cpp -o main_tested.bc
+
+2. Compile the LLVM pass 
+
+ g++ -c Hello.cpp -fPIC `llvm-config --cppflags` -fno-rtti
+
+3. Build into the shared library
+
+ g++ Hello.o -shared
+
+** How to run the pass
+
+ opt -load ./a.out -hello < main_tested.bc  > /dev/null 
