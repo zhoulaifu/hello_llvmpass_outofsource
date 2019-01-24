@@ -13,7 +13,7 @@ http://llvm.org/docs/WritingAnLLVMPass.html#quick-start-writing-hello-world
 https://github.com/hperl/llvm-transformation-pass
 
 
-** Assume we have an LLVM bitcode built with Clang.
+** Assume we have an LLVM bitcode built with Clang
 
 clang foo.c -emit-llvm -c -o foo.bc
 
