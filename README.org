@@ -15,12 +15,14 @@ https://github.com/hperl/llvm-transformation-pass
 
 ** Assume we have an LLVM bitcode built with Clang.
 
-clang++ -emit-llvm main_tested.cpp -o main_tested.bc
+clang foo.c -emit-llvm -c -o foo.bc
 
-** How to build the LLVM pass into a shared library
+** How to build the LLVM pass into a shared library 
 
- g++ -c Hello.cpp -fPIC `llvm-config --cppflags` -fno-rtti &&  g++ Hello.o -shared
+ g++ -c Hello.cpp -fPIC `llvm-config --cppflags` -fno-rtti -o Hello.o &&  g++ Hello.o -shared -o Hello.so
 
+Change "-share" to "-dynamiclib" on Mac.
+ 
 ** How to run the pass
 
- opt -load ./a.out -hello < main_tested.bc  > /dev/null 
+ opt -load ./Hello.so -hello < foo.bc  > /dev/null 
