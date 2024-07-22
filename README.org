@@ -15,14 +15,21 @@ https://github.com/hperl/llvm-transformation-pass
 
 ** Assume we have an LLVM bitcode built with Clang
 
-clang foo.c -emit-llvm -c -o foo.bc
+*** work
+- clang `llvm-config --cppflags` -c Hello.cpp -fPIC -fno-rtti -o Hello.o
+- clang Hello.o -shared -o Hello.so
 
-** How to build the LLVM pass into a shared library 
+*** not work (only diff is bad dash)
+clang `llvm-config –-cppflags` -c Hello.cpp -fPIC -fno-rtti -o Hello.o
 
- g++ -c Hello.cpp -fPIC `llvm-config --cppflags` -fno-rtti -o Hello.o &&  g++ Hello.o -shared -o Hello.so
+
+
+
 
 Change "-share" to "-dynamiclib" on Mac.
  
 ** How to run the pass
 
- opt -load ./Hello.so -hello < foo.bc  > /dev/null 
+*** for relatively new llvm, use  -enable-new-pm=0, or else the pass will not be found
+
+- opt -enable-new-pm=0 -load ./Hello.so -hello < foo.bc > /dev/null
